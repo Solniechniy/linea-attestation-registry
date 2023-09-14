@@ -28,6 +28,7 @@
     "deploy:post": "npx hardhat run script/deploy/postDeployment.ts --network",
     "encode": "npx hardhat run script/encode.ts",
     "lint": "pnpm solhint \"{script,src,test}/**/*.sol\"",
+    "massImport": "npx hardhat run script/massImport/massImport.ts --network",
     "reimport": "npx hardhat run script/recreateNetworkFile.ts --network",
     "test": "forge test",
     "upgrade:all": "npx hardhat run script/upgrade/upgradeEverything.ts --network",
