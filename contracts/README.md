@@ -205,10 +205,9 @@ the last upgrade or the first deployment.
 ## Start upgrading
 
 1. Check that your `.env` file contains the address of all the proxies
-2. Upgrade only the implementations that changed since the last upgrade via the `pnpm run upgrade:all NETWORK_NAME`
-   command
+2. Upgrade only the implementations that changed since the last upgrade via the `pnpm run upgrade NETWORK_NAME` command
 3. _Optional_: Upgrade all the implementations by forcing their re-deployment via the
-   `pnpm run upgrade:all:force NETWORK_NAME` command
+   `pnpm run upgrade:force NETWORK_NAME` command
 
 :warning: Note: Forcing the redeployment of all the implementations is more expensive!
 
