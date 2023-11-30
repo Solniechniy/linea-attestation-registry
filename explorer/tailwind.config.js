@@ -68,6 +68,7 @@ export default {
       },
       transitionProperty: {
         height: 'height',
+        spacing: 'margin, padding, gap',
       },
     },
   },

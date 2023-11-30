@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
+import { Hex, hexToNumber } from 'viem';
 
-import arrow from '@/assets/icons/arrow.svg';
+import { Link } from '@/components/Link';
 import archive from '@/assets/icons/archive.svg';
 import { APP_ROUTES } from '@/routes/constants';
 import { displayAmountWithComma } from '@/utils/amountUtils';
-import { Hex, hexToNumber } from 'viem';
 
 export const NotFoundAttestation: React.FC<{ id: string }> = ({ id }) => {
   const decodedId = hexToNumber(id as Hex);
@@ -18,7 +18,7 @@ export const NotFoundAttestation: React.FC<{ id: string }> = ({ id }) => {
           <span>hasn`t been found</span>
         </p>
         <Link to={APP_ROUTES.ATTESTATIONS} className="flex gap-2 border border-solid rounded-md px-4 py-3">
-          <img src={arrow} className="flex gap-2 -rotate-90" />
+          <ChevronDown width={24} height={24} />
           Go Back
         </Link>
       </div>

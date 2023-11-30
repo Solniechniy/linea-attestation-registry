@@ -1,13 +1,13 @@
+import { Hex, hexToNumber } from 'viem';
 import useSWR, { KeyedMutator } from 'swr';
-import { Link } from 'react-router-dom';
 import { EyeOffIcon } from 'lucide-react';
 import { Attestation } from '@verax-attestation-registry/verax-sdk/lib/types/.graphclient';
 
+import { Link } from '@/components/Link';
 import { SWRKeys } from '@/interfaces/swr/enum';
-import { useNetworkContext } from '@/providers/network-provider';
+import { useNetworkContext } from '@/providers/network-provider/context';
 import { toAttestationById } from '@/routes/constants';
 import { displayAmountWithComma } from '@/utils/amountUtils';
-import { Hex, hexToNumber } from 'viem';
 
 export const RelatedAttestations: React.FC<{ id: string; mutate: KeyedMutator<Attestation> }> = ({ id, mutate }) => {
   const { sdk } = useNetworkContext();
