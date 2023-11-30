@@ -6,24 +6,20 @@ import { DataTable } from './table/dataTable';
 import { columns } from './table/columns';
 import { CURRENT_PAGE_DEFAULT, ITEMS_PER_PAGE_DEFAULT, ZERO } from '@/constants';
 import { useSearchParams } from 'react-router-dom';
-import { useAccount } from 'wagmi';
+// import { Pagination } from '@/components/Pagination';
+import { EQueryParams } from '@/enums/queryParams';
+import { ListSwitcher } from './components/ListSwitcher';
+import { Pagination } from '@/components/Pagination';
 
 export const Attestations: React.FC = () => {
-  const { address } = useAccount();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const sortByDateDirection = searchParams.get('sort_by_date');
-  const attester = searchParams.get('attester');
-
-  const [currentPage, setCurrentPage] = useState<number>(CURRENT_PAGE_DEFAULT);
-  const [skip, setSkip] = useState<number>(ZERO);
   const { sdk } = useNetworkContext();
 
-  const handleAttester = (address?: string) => {
-    const currentSearchParams = new URLSearchParams(searchParams);
-    address ? currentSearchParams.set('attester', address) : currentSearchParams.delete('attester');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [skip, setSkip] = useState<number>(ZERO);
 
-    setSearchParams(currentSearchParams);
-  };
+  const sortByDateDirection = searchParams.get(EQueryParams.SORT_BY_DATE);
+  const attester = searchParams.get(EQueryParams.ATTESTER);
+  const currentPage = Number(searchParams.get(EQueryParams.PAGE));
 
   const { data: attestationsList } = useSWR(
     sortByDateDirection
@@ -39,53 +35,34 @@ export const Attestations: React.FC = () => {
       )
   );
 
-  useEffect(() => {
-    console.log('skip', skip);
-    console.log('data', attestationsList);
-  }, [skip, attestationsList]);
+  const { data: attestationsCount } = useSWR(
+    'attestationsCount',
+    () => sdk.attestation.getAttestationIdCounter() as Promise<number>
+  );
 
   useEffect(() => {
-    console.log('currentPage', currentPage);
     const skipLocal = currentPage === CURRENT_PAGE_DEFAULT ? ZERO : (currentPage - 1) * ITEMS_PER_PAGE_DEFAULT;
-    console.log('skipLocal', skipLocal);
     setSkip(skipLocal);
   }, [currentPage]);
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams();
+
+    () => {
+      setSearchParams(searchParams);
+    };
+  }, []);
+
   return (
-    <>
-      <p>Explore Attestations</p>
-      <button
-        onClick={() => setCurrentPage(currentPage - 1)}
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        prev
-      </button>
-      <span>{currentPage}</span>
-      <button
-        onClick={() => setCurrentPage(currentPage + 1)}
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        next
-      </button>
+    <div className="container mt-5 md:mt-8">
+      <h1 className="mb-6 md:mb-8 text-2xl md:text-[2rem]/[2rem] font-semibold tracking-tighter">
+        Explore Attestations
+      </h1>
       <div>
-        <button
-          onClick={() => handleAttester()}
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        >
-          All attestations
-        </button>
-        <button
-          disabled={!address}
-          onClick={() => handleAttester(address)}
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        >
-          My attestations
-        </button>
-      </div>
-      <div>
-        <div>Table</div>
+        <ListSwitcher />
         {attestationsList && <DataTable columns={columns} data={attestationsList} />}
+        {attestationsCount && <Pagination itemsCount={attestationsCount} />}
       </div>
-    </>
+    </div>
   );
 };

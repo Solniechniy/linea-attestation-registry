@@ -1,55 +1,55 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Attestation } from '@verax-attestation-registry/verax-sdk/lib/types/.graphclient';
-import { useSearchParams } from 'react-router-dom';
-
-const SortByDate: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const handleSort = () => {
-    const currentSearchParams = new URLSearchParams(searchParams);
-
-    if (searchParams.get('sort_by_date') === null) {
-      currentSearchParams.set('sort_by_date', 'asc');
-    } else if (searchParams.get('sort_by_date') === 'asc') {
-      currentSearchParams.set('sort_by_date', 'desc');
-    } else {
-      currentSearchParams.delete('sort_by_date');
-    }
-    setSearchParams(currentSearchParams);
-  };
-
-  return <div onClick={handleSort}>Issued</div>;
-};
-
-// const SortByPortal: React.FC = () => {
-//   const [searchParams, setSearchParams] = useSearchParams();
-
-//   const handleSort = () => {
-//     const currentSearchParams = new URLSearchParams(searchParams);
-//     currentSearchParams.set('portal', 'portal');
-//     currentSearchParams.set('sort', 'asc');
-//     setSearchParams(currentSearchParams);
-//   };
-
-//   return <div onClick={handleSort}>Portal</div>;
-// };
+import { SortByDate } from './components/SortByDate';
+import { hexToNumber } from 'viem/utils';
+import { cropString } from '@/utils/stringUtils';
+import { displayAmountWithComma } from '@/utils/amountUtils';
+import { HelperIndicator } from '@/components/HelperIndicator';
+import { Link } from 'react-router-dom';
+import { toAttestationById } from '@/routes/constants';
+import { Address } from 'viem';
 
 export const columns: ColumnDef<Attestation>[] = [
   {
-    accessorKey: 'portal',
-    header: 'Portal',
+    accessorKey: 'id',
+    header: () => (
+      <div className="flex items-center gap-2.5">
+        <HelperIndicator type="attestation" />
+        Attestation ID
+      </div>
+    ),
+    cell: ({ row }) => {
+      const id = row.getValue('id');
+      return (
+        <Link to={toAttestationById(id as string)} className="text-[#3D3D51] hover:underline hover:text-[#3D3D51]">
+          {displayAmountWithComma(hexToNumber(id as Address))}
+        </Link>
+      );
+    },
   },
   {
-    accessorKey: 'id',
-    header: 'Attestation ID',
+    accessorKey: 'portal',
+    header: () => (
+      <div className="flex items-center gap-2.5">
+        <HelperIndicator type="portal" />
+        Portal
+      </div>
+    ),
+    cell: ({ row }) => cropString(row.getValue('portal')),
   },
   {
     accessorKey: 'schemaString',
-    header: 'Schema',
+    header: () => (
+      <div className="flex items-center gap-2.5">
+        <HelperIndicator type="schema" />
+        Schema
+      </div>
+    ),
   },
   {
     accessorKey: 'subject',
     header: 'Subject',
+    cell: ({ row }) => cropString(row.getValue('subject')),
   },
   {
     accessorKey: 'attestedDate',
