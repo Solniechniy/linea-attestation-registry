@@ -7,7 +7,6 @@ export const loaderNetworkProvider = (({ params }: LoaderFunctionArgs) => {
 
   const foundedNetwork = chains.find((chain) => chain.network === chainId);
   if (!chainId || !foundedNetwork) {
-    //todo: change network in url
     const path = generatePath('/:chainId/', { chainId: defaultChain.network });
     return redirect(path);
   }
