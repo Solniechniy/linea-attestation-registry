@@ -24,7 +24,7 @@ export const BurgerMenu: React.FC<{ isOpened: boolean; setIsOpened: Dispatch<Set
           animate="open"
           variants={slideBurgerMenuAnimation}
           exit="close"
-          className="bg-slate-100 absolute min-h-screen w-full z-[100]"
+          className="bg-surface-secondary absolute min-h-screen w-full z-[100]"
         >
           <NavigationList setIsOpened={setIsOpened} />
         </motion.div>

@@ -14,7 +14,9 @@ export const NavigationList: React.FC<{ setIsOpened?: Dispatch<SetStateAction<bo
               onClick={() => setIsOpened?.(false)}
               to={route}
               className={({ isActive }) =>
-                `${isActive ? 'text-zinc-950' : 'text-slate-500'} text-xl lg:text-base font-medium hover:underline`
+                `${
+                  isActive ? 'text-text-primary' : 'text-text-tertiary'
+                } text-xl lg:text-base font-medium hover:underline hover:text-text-primary`
               }
             >
               {name}

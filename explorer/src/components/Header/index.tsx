@@ -41,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({ isOpened, setIsOpened }) => {
       </div>
       <div className="justify-start items-center gap-4 flex">
         <DropdownMenu>
-          <DropdownMenuTrigger className="DropdownMenuTrigger select-none w-[72px] p-2 rounded-md outline-none hover:bg-lime-100 justify-start items-center gap-2 inline-flex">
+          <DropdownMenuTrigger className="DropdownMenuTrigger select-none w-[72px] p-2 rounded-md outline-none hover:bg-hover-lime20 justify-start items-center gap-2 inline-flex">
             <img src={network.img} className="w-6 h-6 relative" alt="Linea logo" />
             <ChevronDown className="header-arrow w-6 h-6 relative" />
           </DropdownMenuTrigger>
@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({ isOpened, setIsOpened }) => {
             {chains.map((chain) => (
               <DropdownMenuItem
                 key={chain.name}
-                className="flex gap-2 focus:bg-lime-100 cursor-pointer"
+                className="flex gap-2 focus:bg-hover-lime20 cursor-pointer"
                 onClick={() => setNetwork(chain)}
               >
                 <img src={chain.img} className="w-6 h-6" alt={chain.name} />
@@ -63,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({ isOpened, setIsOpened }) => {
             return (
               <button
                 onClick={show}
-                className="cursor-pointer px-3 h-9 xl:h-12 xl:px-4 gap-2 rounded-md border border-zinc-200 justify-center items-center inline-flex whitespace-nowrap hover:border-slate-500"
+                className="cursor-pointer px-3 h-9 xl:h-12 xl:px-4 gap-2 rounded-md border border-button-secondary-border justify-center items-center inline-flex whitespace-nowrap hover:border-button-secondary-hover"
               >
                 {address && isConnected ? cropString(address) : screen.sm ? 'Connect' : 'Connect Wallet'}
                 {!isAdaptive && <ChevronDown />}
@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ isOpened, setIsOpened }) => {
             );
           }}
         </ConnectKitButton.Custom>
-        {isAdaptive && <MenuButton isOpened={isOpened} color="#64687D" onClick={() => setIsOpened((prev) => !prev)} />}
+        {isAdaptive && <MenuButton isOpened={isOpened} onClick={() => setIsOpened((prev) => !prev)} />}
       </div>
     </div>
   );
