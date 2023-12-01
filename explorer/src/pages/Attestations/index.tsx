@@ -6,7 +6,6 @@ import { DataTable } from './table/dataTable';
 import { columns } from './table/columns';
 import { CURRENT_PAGE_DEFAULT, ITEMS_PER_PAGE_DEFAULT, ZERO } from '@/constants';
 import { useSearchParams } from 'react-router-dom';
-// import { Pagination } from '@/components/Pagination';
 import { EQueryParams } from '@/enums/queryParams';
 import { ListSwitcher } from './components/ListSwitcher';
 import { Pagination } from '@/components/Pagination';
@@ -55,11 +54,19 @@ export const Attestations: React.FC = () => {
 
   return (
     <div className="container mt-5 md:mt-8">
-      <h1 className="mb-6 md:mb-8 text-2xl md:text-[2rem]/[2rem] font-semibold tracking-tighter">
-        Explore Attestations
-      </h1>
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 md:mb-8 gap-6 md:gap-0">
+        <h1 className="text-2xl md:text-[2rem]/[2rem] font-semibold tracking-tighter zinc-950">Explore Attestations</h1>
+        {/* TODO: add button handler */}
+        <button
+          onClick={() => console.log('Create Attestation')}
+          className="h-12 px-4 bg-[#C4FF1C] hover:bg-lime-400 disabled:opacity-30 rounded-md text-zinc-950 text-base font-semibold leading-snug w-full md:w-fit"
+        >
+          Create Attestation
+        </button>
+      </div>
       <div>
         <ListSwitcher />
+        {/* TODO: add skeleton for table */}
         {attestationsList && <DataTable columns={columns} data={attestationsList} />}
         {attestationsCount && <Pagination itemsCount={attestationsCount} />}
       </div>

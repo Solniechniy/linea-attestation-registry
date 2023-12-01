@@ -8,6 +8,7 @@ import { HelperIndicator } from '@/components/HelperIndicator';
 import { Link } from 'react-router-dom';
 import { toAttestationById } from '@/routes/constants';
 import { Address } from 'viem';
+import { getTimeAgo } from '@/utils/dateUtils';
 
 export const columns: ColumnDef<Attestation>[] = [
   {
@@ -49,12 +50,15 @@ export const columns: ColumnDef<Attestation>[] = [
   {
     accessorKey: 'subject',
     header: 'Subject',
+    // TODO: add link to lineascan
     cell: ({ row }) => cropString(row.getValue('subject')),
   },
   {
     accessorKey: 'attestedDate',
-    header: () => {
-      return <SortByDate />;
+    header: () => <SortByDate />,
+    cell: ({ row }) => {
+      const date: number = row.getValue('attestedDate');
+      return getTimeAgo(date);
     },
   },
 ];

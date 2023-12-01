@@ -19,12 +19,12 @@ export const ListSwitcher = () => {
   };
 
   return (
-    <div className="inline-flex bg-[#F4F5F9] gap-2 mb-6 rounded">
+    <div className="inline-flex bg-slate-100 gap-2 mb-6 rounded">
       <button
         disabled={Boolean(!attester)}
         onClick={() => handleAttester()}
         className={`h-[2.1875rem] px-3 rounded text-base font-medium ${
-          attester ? 'text-[#656B87]' : 'text-[#FEFEFE] bg-[#3D3D51]'
+          attester ? 'text-[#656B87]' : 'text-white bg-gray-700'
         }`}
       >
         All attestations
@@ -33,7 +33,7 @@ export const ListSwitcher = () => {
         disabled={!address || Boolean(attester)}
         onClick={() => handleAttester(address)}
         className={`h-[2.1875rem] px-3 rounded text-base font-medium ${
-          attester ? 'text-[#FEFEFE] bg-[#3D3D51]' : 'text-[#656B87]'
+          attester ? 'text-white bg-gray-700' : 'text-[#656B87]'
         }`}
       >
         My attestations

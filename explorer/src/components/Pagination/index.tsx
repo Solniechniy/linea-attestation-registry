@@ -2,16 +2,19 @@ import { ITEMS_PER_PAGE_DEFAULT } from '@/constants';
 import { EQueryParams } from '@/enums/queryParams';
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
-export interface IPaginationProps {
-  itemsCount: number;
-}
+import { IPaginationProps } from './interface';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { displayAmountWithComma } from '@/utils/amountUtils';
 
 export const Pagination = ({ itemsCount }: IPaginationProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get(EQueryParams.PAGE);
+
   const [currentPage, setCurrentPage] = useState<number>(Number(page) || 1);
   const totalPages = Math.ceil(itemsCount / ITEMS_PER_PAGE_DEFAULT);
+
+  const disablePrev = currentPage === 1;
+  const disableNext = currentPage === totalPages;
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(searchParams);
@@ -23,8 +26,6 @@ export const Pagination = ({ itemsCount }: IPaginationProps) => {
       setSearchParams(currentSearchParams);
     };
   }, [currentPage, searchParams, setSearchParams]);
-
-  /////////////////////////////////////
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -51,47 +52,60 @@ export const Pagination = ({ itemsCount }: IPaginationProps) => {
   };
 
   return (
-    <>
-      <button type="button" aria-label="First" onClick={handleFirstPage} disabled={currentPage === 1} className="prev">
-        First Page
-      </button>
-      <button
-        type="button"
-        aria-label="Previous"
-        onClick={handlePreviousPage}
-        disabled={currentPage === 1}
-        className="prev"
-      >
-        Previous page
-      </button>
-      <input
-        type="number"
-        ref={inputRef}
-        key={currentPage}
-        defaultValue={currentPage}
-        onBlur={blurHandler}
-        onChange={(event) => changePage(event.target.value)}
-      />
-      <button type="button" aria-label="Next" onClick={handleNextPage} disabled={currentPage === totalPages}>
-        Next Page
-      </button>
-      <button type="button" aria-label="Last" onClick={handleLastPage} disabled={currentPage === totalPages}>
-        Last Page
-      </button>
-      <span>{`of ${totalPages}`}</span>
-      {/* <button
-        onClick={() => setCurrentPage(currentPage - 1)}
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        prev
-      </button>
-      <span>{currentPage}</span>
-      <button
-        onClick={() => setCurrentPage(currentPage + 1)}
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        next
-      </button> */}
-    </>
+    <div className="flex justify-between items-center mt-8 mb-24">
+      <div className="flex gap-3">
+        <button
+          type="button"
+          aria-label="First"
+          onClick={handleFirstPage}
+          disabled={disablePrev}
+          className={`${disablePrev && 'opacity-40'}`}
+        >
+          <ChevronsLeft />
+        </button>
+        <button
+          type="button"
+          aria-label="Previous"
+          onClick={handlePreviousPage}
+          disabled={disablePrev}
+          className={`flex text-base font-semibold ${disablePrev && 'opacity-40'}`}
+        >
+          <ChevronLeft />
+          <span className="hidden md:inline-block">Previous</span>
+        </button>
+      </div>
+      <div className="flex items-center gap-3">
+        <input
+          type="number"
+          ref={inputRef}
+          key={currentPage}
+          defaultValue={currentPage}
+          onBlur={blurHandler}
+          onChange={(event) => changePage(event.target.value)}
+          className="w-12 h-8 px-2 border text-xs font-semibold text-zinc-950 text-center outline-none border-slate-200 focus:border-slate-400 rounded-lg"
+        />
+        <span className="text-slate-500 text-xs font-normal">{`of ${displayAmountWithComma(totalPages)}`}</span>
+      </div>
+      <div className="flex gap-3">
+        <button
+          type="button"
+          aria-label="Next"
+          onClick={handleNextPage}
+          disabled={disableNext}
+          className={`flex text-base font-semibold ${disableNext && 'opacity-40'}`}
+        >
+          <span className="hidden md:inline-block">Next</span> <ChevronRight />
+        </button>
+        <button
+          type="button"
+          aria-label="Last"
+          onClick={handleLastPage}
+          disabled={disableNext}
+          className={`${disableNext && 'opacity-40'}`}
+        >
+          <ChevronsRight />
+        </button>
+      </div>
+    </div>
   );
 };
