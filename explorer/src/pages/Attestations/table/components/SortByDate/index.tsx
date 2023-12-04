@@ -1,7 +1,7 @@
-import { EQueryParams } from '@/enums/queryParams';
-import { ETableSorting } from '@/enums/tableSorting';
 import { ArrowDownUp } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
+import { EQueryParams } from '@/enums/queryParams';
+import { ETableSorting } from '@/enums/tableSorting';
 
 export const SortByDate: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();

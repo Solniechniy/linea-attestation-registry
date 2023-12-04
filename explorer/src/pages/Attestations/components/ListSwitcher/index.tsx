@@ -1,6 +1,6 @@
-import { EQueryParams } from '@/enums/queryParams';
-import { useSearchParams } from 'react-router-dom';
 import { useAccount } from 'wagmi';
+import { useSearchParams } from 'react-router-dom';
+import { EQueryParams } from '@/enums/queryParams';
 
 export const ListSwitcher = () => {
   const { address } = useAccount();
@@ -24,7 +24,7 @@ export const ListSwitcher = () => {
         disabled={Boolean(!attester)}
         onClick={() => handleAttester()}
         className={`h-[2.1875rem] px-3 rounded text-base font-medium ${
-          attester ? 'text-[#656B87]' : 'text-white bg-gray-700'
+          attester ? 'text-text-tertiary' : 'text-white bg-gray-700'
         }`}
       >
         All attestations
@@ -33,7 +33,7 @@ export const ListSwitcher = () => {
         disabled={!address || Boolean(attester)}
         onClick={() => handleAttester(address)}
         className={`h-[2.1875rem] px-3 rounded text-base font-medium ${
-          attester ? 'text-white bg-gray-700' : 'text-[#656B87]'
+          attester ? 'text-white bg-gray-700' : 'text-text-tertiary'
         }`}
       >
         My attestations

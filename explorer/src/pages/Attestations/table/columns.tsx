@@ -1,14 +1,14 @@
+import { Address } from 'viem';
+import { hexToNumber } from 'viem/utils';
+import { Link } from 'react-router-dom';
 import { ColumnDef } from '@tanstack/react-table';
 import { Attestation } from '@verax-attestation-registry/verax-sdk/lib/types/.graphclient';
-import { SortByDate } from './components/SortByDate';
-import { hexToNumber } from 'viem/utils';
 import { cropString } from '@/utils/stringUtils';
 import { displayAmountWithComma } from '@/utils/amountUtils';
 import { HelperIndicator } from '@/components/HelperIndicator';
-import { Link } from 'react-router-dom';
 import { toAttestationById } from '@/routes/constants';
-import { Address } from 'viem';
 import { getTimeAgo } from '@/utils/dateUtils';
+import { SortByDate } from './components/SortByDate';
 
 export const columns: ColumnDef<Attestation>[] = [
   {
@@ -22,7 +22,10 @@ export const columns: ColumnDef<Attestation>[] = [
     cell: ({ row }) => {
       const id = row.getValue('id');
       return (
-        <Link to={toAttestationById(id as string)} className="text-[#3D3D51] hover:underline hover:text-[#3D3D51]">
+        <Link
+          to={toAttestationById(id as string)}
+          className="text-text-secondary hover:underline hover:text-text-secondary"
+        >
           {displayAmountWithComma(hexToNumber(id as Address))}
         </Link>
       );
