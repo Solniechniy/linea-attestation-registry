@@ -1,15 +1,15 @@
-import { useNetworkContext } from '@/providers/network-provider';
 import { OrderDirection } from '@verax-attestation-registry/verax-sdk/lib/types/.graphclient';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { useSearchParams } from 'react-router-dom';
 import { EQueryParams } from '@/enums/queryParams';
 import { Pagination } from '@/components/Pagination';
+import { SWRKeys } from '@/interfaces/swr/enum';
 import { ITEMS_PER_PAGE_DEFAULT, ZERO } from '@/constants';
+import { useNetworkContext } from '@/providers/network-provider/context';
 import { DataTable } from './table/dataTable';
 import { columns } from './table/columns';
 import { ListSwitcher } from './components/ListSwitcher';
-import { SWRKeys } from '@/interfaces/swr/enum';
 
 export const Attestations: React.FC = () => {
   const {
@@ -41,7 +41,7 @@ export const Attestations: React.FC = () => {
   );
 
   return (
-    <div className="container mt-5 md:mt-8">
+    <div className="container mx-auto mt-5 md:mt-8">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 md:mb-8 gap-6 md:gap-0">
         <h1 className="text-2xl md:text-[2rem]/[2rem] font-semibold tracking-tighter zinc-950">Explore Attestations</h1>
       </div>

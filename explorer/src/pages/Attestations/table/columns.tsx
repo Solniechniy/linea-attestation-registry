@@ -1,6 +1,6 @@
 import { Address } from 'viem';
 import { hexToNumber } from 'viem/utils';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { ColumnDef } from '@tanstack/react-table';
 import { Attestation } from '@verax-attestation-registry/verax-sdk/lib/types/.graphclient';
 import { cropString } from '@/utils/stringUtils';
@@ -9,6 +9,7 @@ import { HelperIndicator } from '@/components/HelperIndicator';
 import { toAttestationById } from '@/routes/constants';
 import { getTimeAgo } from '@/utils/dateUtils';
 import { SortByDate } from './components/SortByDate';
+import { Link } from '@/components/Link';
 
 export const columns: ColumnDef<Attestation>[] = [
   {
