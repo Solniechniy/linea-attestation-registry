@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { useParams } from 'react-router-dom';
 import { Attestation as AttestationProps } from '@verax-attestation-registry/verax-sdk/lib/types/.graphclient';
 
-import { useNetworkContext } from '@/providers/network-provider';
+import { useNetworkContext } from '@/providers/network-provider/context';
 import { SWRKeys } from '@/interfaces/swr/enum';
 import { EMPTY_STRING } from '@/constants';
 
